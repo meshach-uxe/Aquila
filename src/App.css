@@ -1,0 +1,511 @@
+/* Monkeytype-inspired Dark Theme for QR Code Generator */
+
+/* CSS Reset and Base Styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+  background-color: #323437; /* Monkeytype main background */
+  color: #d1d0c5; /* Monkeytype main text color */
+  line-height: 1.6;
+  overflow-x: hidden;
+}
+
+/* Main App Container */
+.app-container {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #323437 0%, #2c2e31 100%);
+  padding: 2rem 1rem;
+}
+
+.main-content {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* Header Styles */
+.header {
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
+.header-brand {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.logo-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 4rem;
+  height: 4rem;
+  background: linear-gradient(135deg, #e2b714 0%, #f1c40f 100%); /* Monkeytype yellow accent */
+  border-radius: 1rem;
+  box-shadow: 0 8px 32px rgba(226, 183, 20, 0.3);
+  flex-shrink: 0;
+}
+
+.logo-icon {
+  width: 2rem;
+  height: 2rem;
+  color: #2c2e31;
+}
+
+.app-title {
+  font-size: 3rem;
+  font-weight: 700;
+  background: linear-gradient(135deg, #e2b714 0%, #f1c40f 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin: 0;
+  letter-spacing: -0.02em;
+}
+
+.app-description {
+  font-size: 1.125rem;
+  color: #646669; /* Monkeytype sub text color */
+  font-weight: 400;
+}
+
+/* Main Card */
+.main-card {
+  background: #2c2e31; /* Monkeytype card background */
+  border-radius: 1.5rem;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
+  overflow: hidden;
+  border: 1px solid #646669;
+}
+
+/* Tab Navigation */
+.tab-navigation {
+  border-bottom: 1px solid #646669;
+  background: #2c2e31;
+}
+
+.tab-nav {
+  display: flex;
+}
+
+.tab-button {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 1rem 1.5rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  background: none;
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  color: #646669;
+  position: relative;
+}
+
+.tab-button:hover {
+  background: #323437;
+  color: #d1d0c5;
+}
+
+.tab-active {
+  color: #e2b714 !important;
+  background: #323437;
+}
+
+.tab-active::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: #e2b714;
+}
+
+.tab-icon {
+  width: 1rem;
+  height: 1rem;
+}
+
+/* Card Content */
+.card-content {
+  padding: 2rem;
+}
+
+.content-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 3rem;
+  align-items: start;
+}
+
+@media (max-width: 1024px) {
+  .content-grid {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+}
+
+/* Input Section */
+.input-section {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.section-title {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #d1d0c5;
+  margin-bottom: 0.5rem;
+}
+
+.input-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.input-label {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: #646669;
+}
+
+.text-input,
+.textarea-input {
+  width: 100%;
+  padding: 0.875rem 1rem;
+  background: #323437;
+  border: 1px solid #646669;
+  border-radius: 0.75rem;
+  color: #d1d0c5;
+  font-size: 0.875rem;
+  transition: all 0.2s ease;
+  font-family: inherit;
+}
+
+.text-input:focus,
+.textarea-input:focus {
+  outline: none;
+  border-color: #e2b714;
+  box-shadow: 0 0 0 3px rgba(226, 183, 20, 0.1);
+}
+
+.text-input::placeholder,
+.textarea-input::placeholder {
+  color: #646669;
+}
+
+.textarea-input {
+  resize: vertical;
+  min-height: 100px;
+}
+
+.input-help {
+  font-size: 0.75rem;
+  color: #646669;
+  margin-top: 0.25rem;
+}
+
+/* Contact Form */
+.contact-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.contact-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+
+@media (max-width: 640px) {
+  .contact-row {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Clear Button */
+.clear-button {
+  width: 100%;
+  padding: 0.875rem 1.5rem;
+  background: #646669;
+  color: #d1d0c5;
+  border: none;
+  border-radius: 0.75rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.clear-button:hover {
+  background: #757575;
+  transform: translateY(-1px);
+}
+
+/* QR Section */
+.qr-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.qr-container {
+  background: #323437;
+  border-radius: 1.5rem;
+  padding: 2rem;
+  width: 100%;
+  max-width: 400px;
+  border: 1px solid #646669;
+}
+
+.qr-display {
+  text-align: center;
+}
+
+.qr-code-wrapper {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 1rem;
+}
+
+.qr-instruction {
+  font-size: 0.875rem;
+  color: #646669;
+}
+
+.qr-placeholder {
+  text-align: center;
+  padding: 4rem 2rem;
+}
+
+.placeholder-icon {
+  width: 4rem;
+  height: 4rem;
+  color: #646669;
+  margin-bottom: 1rem;
+}
+
+.placeholder-text {
+  color: #646669;
+  font-size: 0.875rem;
+}
+
+/* Action Buttons */
+.action-buttons {
+  display: flex;
+  gap: 1rem;
+  width: 100%;
+  max-width: 400px;
+}
+
+.action-button {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.875rem 1.5rem;
+  border: none;
+  border-radius: 0.75rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.action-button.primary {
+  background: linear-gradient(135deg, #e2b714 0%, #f1c40f 100%);
+  color: #2c2e31;
+  box-shadow: 0 4px 16px rgba(226, 183, 20, 0.3);
+}
+
+.action-button.primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(226, 183, 20, 0.4);
+}
+
+.action-button.secondary {
+  background: #646669;
+  color: #d1d0c5;
+}
+
+.action-button.secondary:hover {
+  background: #757575;
+  transform: translateY(-1px);
+}
+
+.button-icon {
+  width: 1rem;
+  height: 1rem;
+}
+
+.button-icon.success {
+  color: #27ae60;
+}
+
+/* QR Data Display */
+.qr-data-display {
+  width: 100%;
+  max-width: 400px;
+}
+
+.data-title {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: #646669;
+  margin-bottom: 0.5rem;
+}
+
+.data-content {
+  background: #323437;
+  border-radius: 0.75rem;
+  padding: 1rem;
+  max-height: 8rem;
+  overflow-y: auto;
+  border: 1px solid #646669;
+}
+
+.data-text {
+  font-size: 0.75rem;
+  color: #646669;
+  white-space: pre-wrap;
+  word-break: break-all;
+  font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+}
+
+/* Footer */
+.footer {
+  text-align: center;
+  margin-top: 3rem;
+}
+
+.footer-text {
+  color: #646669;
+  font-size: 0.875rem;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #2c2e31;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #646669;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #757575;
+}
+
+/* QR Code Specific Styles */
+.qr-canvas,
+.qr-image {
+  border-radius: 12px;
+  border: 2px solid #646669;
+  background: #2c2e31;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .app-container {
+    padding: 1rem 0.5rem;
+  }
+  
+  .app-title {
+    font-size: 2rem;
+  }
+  
+  .card-content {
+    padding: 1.5rem;
+  }
+  
+  .action-buttons {
+    flex-direction: column;
+  }
+  
+  .tab-button {
+    padding: 0.875rem 1rem;
+    font-size: 0.8125rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .app-title {
+    font-size: 1.75rem;
+  }
+  
+  .card-content {
+    padding: 1rem;
+  }
+  
+  .qr-container {
+    padding: 1.5rem;
+  }
+}
+
+/* Animation for smooth transitions */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.main-card {
+  animation: fadeIn 0.5s ease-out;
+}
+
+/* Focus styles for accessibility */
+.tab-button:focus,
+.text-input:focus,
+.textarea-input:focus,
+.action-button:focus,
+.clear-button:focus {
+  outline: 2px solid #e2b714;
+  outline-offset: 2px;
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+  .main-card {
+    border: 2px solid #d1d0c5;
+  }
+  
+  .text-input,
+  .textarea-input {
+    border: 2px solid #d1d0c5;
+  }
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

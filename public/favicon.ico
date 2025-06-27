@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
+  <!-- Background -->
+  <rect width="32" height="32" fill="#ffffff"/>
+  
+  <!-- Top left large square -->
+  <rect x="0" y="0" width="16" height="16" fill="#f0b90b"/>
+  <rect x="4" y="4" width="8" height="8" fill="#ffffff"/>
+  
+  <!-- Top right small square -->
+  <rect x="20" y="4" width="8" height="8" fill="#f0b90b"/>
+  
+  <!-- Bottom left small square -->
+  <rect x="4" y="20" width="8" height="8" fill="#f0b90b"/>
+  
+  <!-- Bottom right large square -->
+  <rect x="16" y="16" width="16" height="16" fill="#f0b90b"/>
+  <rect x="20" y="20" width="8" height="8" fill="#ffffff"/>
+</svg>
