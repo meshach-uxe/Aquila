@@ -4,9 +4,19 @@
     <meta charset="utf-8" />
     <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="theme-color" content="#323437" />
+    <meta name="theme-color" content="#e2b714" />
     <meta name="description" content="Aquila - Generate QR codes for URLs, text, and contact information with a beautiful Monkeytype-inspired interface" />
-    <link rel="apple-touch-icon" href="%PUBLIC_URL%/logo192.png" />
+    
+    <!-- PWA Meta Tags -->
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="Aquila">
+    <meta name="msapplication-TileColor" content="#323437">
+    <meta name="msapplication-config" content="/browserconfig.xml">
+    <link rel="apple-touch-icon" href="%PUBLIC_URL%/icon-192.svg" />
+    <link rel="apple-touch-icon" sizes="192x192" href="%PUBLIC_URL%/icon-192.svg" />
+    <link rel="icon" type="image/svg+xml" href="%PUBLIC_URL%/icon-512.svg" />
     <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -58,6 +68,19 @@
       window.addEventListener('load', function() {
         document.body.classList.add('loaded');
       });
+      
+      // Register service worker for PWA
+      if ('serviceWorker' in navigator) {
+        window.addEventListener('load', function() {
+          navigator.serviceWorker.register('/service-worker.js')
+            .then(function(registration) {
+              console.log('SW registered: ', registration);
+            })
+            .catch(function(registrationError) {
+              console.log('SW registration failed: ', registrationError);
+            });
+        });
+      }
     </script>
   </body>
 </html>
