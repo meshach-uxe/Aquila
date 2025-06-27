@@ -1,5 +1,15 @@
 {
   "version": 2,
+  "functions": {
+    "app/api/**/*.js": {
+      "runtime": "nodejs20.x"
+    }
+  },
+  "build": {
+    "env": {
+      "NODE_VERSION": "20"
+    }
+  },
   "routes": [
     {
       "src": "/service-worker.js",
