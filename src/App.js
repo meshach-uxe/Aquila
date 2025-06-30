@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { QrCode, Link, MessageSquare, User, Download, Copy, Check } from 'lucide-react';
 import './App.css';
 
@@ -79,10 +79,78 @@ const QRCodeGenerator = () => {
   });
 
   /**
+   * Fallback QR generation using external APIs
+   * @param {string} text - The text to encode
+   */
+  const generateFallbackQR = useCallback((text) => {
+    if (!qrContainerRef.current) return;
+
+    // Clear previous content
+    qrContainerRef.current.innerHTML = '';
+    
+    // Create img element for fallback
+    const img = document.createElement('img');
+    const encodedData = encodeURIComponent(text);
+    img.src = `https://chart.googleapis.com/chart?chs=300x300&cht=qr&chl=${encodedData}&choe=UTF-8`;
+    img.alt = t('qrCodeAlt');
+    img.className = 'qr-image';
+    img.style.maxWidth = '300px';
+    img.style.height = 'auto';
+    img.style.borderRadius = '12px';
+    img.style.border = '2px solid #646669';
+    
+    // Add error handling for the fallback image
+    img.onerror = () => {
+      // If Google Charts also fails, try QR Server API
+      img.src = `https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=${encodedData}&format=png&margin=10`;
+    };
+    
+    qrContainerRef.current.appendChild(img);
+  }, []);
+
+  /**
+   * Create QR code using QRious library
+   * @param {string} text - The text to encode
+   */
+  const createQR = useCallback((text) => {
+    if (!qrContainerRef.current) return;
+
+    try {
+      // Clear previous QR code
+      qrContainerRef.current.innerHTML = '';
+      
+      // Create canvas element
+      const canvas = document.createElement('canvas');
+      qrContainerRef.current.appendChild(canvas);
+      
+      // Generate QR code with Monkeytype-inspired styling
+      new window.QRious({
+        element: canvas,
+        value: text,
+        size: 300,
+        background: '#2c2e31', // Dark background matching Monkeytype theme
+        foreground: '#e2b714', // Yellow accent color from Monkeytype
+        level: 'M'
+      });
+      
+      // Style the canvas with dark theme
+      canvas.className = 'qr-canvas';
+      canvas.style.maxWidth = '300px';
+      canvas.style.height = 'auto';
+      canvas.style.borderRadius = '12px';
+      canvas.style.border = '2px solid #646669';
+      
+    } catch (error) {
+      console.error('Error creating QR code:', error);
+      generateFallbackQR(text);
+    }
+  }, [generateFallbackQR]);
+
+  /**
    * Generate QR Code using QRious library with fallback options
    * @param {string} text - The text to encode in the QR code
    */
-  const generateQRCode = async (text) => {
+  const generateQRCode = useCallback(async (text) => {
     if (!text.trim()) {
       if (qrContainerRef.current) {
         qrContainerRef.current.innerHTML = '';
@@ -107,75 +175,7 @@ const QRCodeGenerator = () => {
       // Fallback to Google Charts API
       generateFallbackQR(text);
     }
-  };
-
-  /**
-   * Create QR code using QRious library
-   * @param {string} text - The text to encode
-   */
-  const createQR = (text) => {
-    if (!qrContainerRef.current) return;
-
-    try {
-      // Clear previous QR code
-      qrContainerRef.current.innerHTML = '';
-      
-      // Create canvas element
-      const canvas = document.createElement('canvas');
-      qrContainerRef.current.appendChild(canvas);
-      
-      // Generate QR code with Monkeytype-inspired styling
-      const qr = new window.QRious({
-        element: canvas,
-        value: text,
-        size: 300,
-        background: '#2c2e31', // Dark background matching Monkeytype theme
-        foreground: '#e2b714', // Yellow accent color from Monkeytype
-        level: 'M'
-      });
-      
-      // Style the canvas with dark theme
-      canvas.className = 'qr-canvas';
-      canvas.style.maxWidth = '300px';
-      canvas.style.height = 'auto';
-      canvas.style.borderRadius = '12px';
-      canvas.style.border = '2px solid #646669';
-      
-    } catch (error) {
-      console.error('Error creating QR code:', error);
-      generateFallbackQR(text);
-    }
-  };
-
-  /**
-   * Fallback QR generation using external APIs
-   * @param {string} text - The text to encode
-   */
-  const generateFallbackQR = (text) => {
-    if (!qrContainerRef.current) return;
-
-    // Clear previous content
-    qrContainerRef.current.innerHTML = '';
-    
-    // Create img element for fallback
-    const img = document.createElement('img');
-    const encodedData = encodeURIComponent(text);
-    img.src = `https://chart.googleapis.com/chart?chs=300x300&cht=qr&chl=${encodedData}&choe=UTF-8`;
-    img.alt = t('qrCodeAlt');
-    img.className = 'qr-image';
-    img.style.maxWidth = '300px';
-    img.style.height = 'auto';
-    img.style.borderRadius = '12px';
-    img.style.border = '2px solid #646669';
-    
-    // Add error handling for the fallback image
-    img.onerror = () => {
-      // If Google Charts also fails, try QR Server API
-      img.src = `https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=${encodedData}&format=png&margin=10`;
-    };
-    
-    qrContainerRef.current.appendChild(img);
-  };
+  }, [createQR, generateFallbackQR]);
 
   /**
    * Format URL to ensure it has proper protocol
@@ -232,7 +232,7 @@ END:VCARD`;
     
     setQrData(data);
     generateQRCode(data);
-  }, [activeTab, urlInput, textInput, contactInfo]);
+  }, [activeTab, urlInput, textInput, contactInfo, generateQRCode]);
 
   /**
    * Download the generated QR code as PNG
